@@ -1,5 +1,6 @@
 import React from 'react';
-import {Provider} from 'mobx-react';
+import { Provider } from 'mobx-react';
+import Layout from './core/layout';
 import logo from './logo.svg';
 import Store from './store';
 
@@ -11,14 +12,15 @@ class App extends React.Component {
   constructor(props: any) {
     super(props);
     this.store = new Store({
-      schema: {},
-      components: {},
+      schema: [],
+      library: {},
     });
   }
 
   render() {
     return (
-      <Provider liwe={this.store}>
+      <Provider store={this.store}>
+        <Layout />
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo"/>
