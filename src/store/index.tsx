@@ -1,9 +1,6 @@
 import React from 'react';
 import { observable } from 'mobx';
-
-function isMap(obj: any): obj is Map<string, any> {
-  return obj instanceof Map;
-}
+import HOC from '../core/hoc';
 
 export default class Store {
   @observable schema: any[];
@@ -15,12 +12,9 @@ export default class Store {
     library,
   }: {
     schema: any[];
-    library: { [key: string]: any; } | Map<string, any>
+    library: { [key: string]: any; }
   }) {
-    if (!isMap(library)) {
-      library = new Map(Object.entries(library));
-    }
-    this.library = library as Map<string, any>;
+    this.library = new Map(Object.entries(this.doWrap(library)));
     if (!Array.isArray(schema)) {
       schema = [schema];
     }
@@ -39,5 +33,22 @@ export default class Store {
     }
 
     return <TargetComponent schema={inn} />;
+  };
+
+  doWrap = (library: { [key: string]: any; }) => {
+    return Object.entries(library).reduce((lib, [key, value]) => {
+      lib[key] = HOC(value);
+      return lib;
+    }, {} as { [key: string]: any; });
+  };
+
+  changeElementData = (id: string, key: string, value: any) => {
+    const component = this.beeLine.get(id);
+    if (component) {
+      // TODO 这里需要确认到底怎么改 (& key 如果是 path 怎么办)
+      component[key] = value;
+    } else {
+      console.warn('changeElementData 找不到对应组件:', id, key, value);
+    }
   };
 }

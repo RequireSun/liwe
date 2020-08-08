@@ -1,7 +1,9 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-import Store from '../store';
 import get from 'lodash/get';
+import Store from '../store';
+import curry from '../util/curry';
+import { id } from '../util/generator';
 
 const SYM_WATCHERS = Symbol('watchers');
 const EXCLUDES = new Set(['type']);
@@ -30,9 +32,13 @@ const genNames = (str: string): string[] => {
 class HOC extends React.Component<any, any> {
   [SYM_WATCHERS]: (keyof HOC)[];
 
+  // TODO 事件监听
   constructor(props: any) {
     super(props);
     const { store, schema }: { store: Store; schema: any; } = props;
+    if (!schema.id) {
+      schema.id = `comp_${id()}`;
+    }
     store.checkIn(this);
 
     const watchers = Object.entries(schema).reduce(function (properties, [key, expression]) {
@@ -71,6 +77,7 @@ class HOC extends React.Component<any, any> {
   render() {
     const {
       TargetComponent,
+      changeElementData,
       schema,
       ...otherProps
     } = this.props;
@@ -80,7 +87,7 @@ class HOC extends React.Component<any, any> {
       return obj;
     },{});
 
-    return <TargetComponent {...otherProps} {...watched} />;
+    return <TargetComponent onChange={curry(changeElementData, schema.id)} {...otherProps} {...watched} />;
   }
 }
 

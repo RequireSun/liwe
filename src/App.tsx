@@ -1,6 +1,9 @@
 import React from 'react';
 import { Provider } from 'mobx-react';
 import Layout from './core/layout';
+import Select from './component/select';
+import Input from './component/input';
+import Text from './component/text';
 import logo from './logo.svg';
 import Store from './store';
 
@@ -11,9 +14,19 @@ class App extends React.Component {
 
   constructor(props: any) {
     super(props);
-    this.store = new Store({
-      schema: [],
-      library: {},
+    (window as any).__store__ = this.store = new Store({
+      schema: [{
+        id: 'input_1',
+        type: 'Input',
+      }, {
+        type: 'Text',
+        content: '${input_1.value}',
+      }],
+      library: {
+        Select,
+        Input,
+        Text,
+      },
     });
   }
 
