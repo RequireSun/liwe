@@ -49,6 +49,7 @@ export default class Store {
   };
 
   render = (inn: SchemaNode) => {
+    // TODO 搞个 schema 预处理模块, 不要在逻辑里搞兼容, 逻辑里只负责进行检查, 过不了就报错
     if (!inn.id) {
       inn.id = `comp_${id()}`;
     }
