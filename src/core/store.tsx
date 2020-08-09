@@ -1,11 +1,12 @@
 import React from 'react';
 import { observable } from 'mobx';
-import HOC from '../core/hoc';
+import Base from './wrapper/base';
+import Label from './wrapper/label';
 
 const wrapLibrary = (library: { [key: string]: any; }) => {
   const result: { [key: string]: any; } = {};
   for (const [key, value] of Object.entries(library)) {
-    result[key] = HOC(value);
+    result[key] = Base(Label(value));
   }
   return result;
 };

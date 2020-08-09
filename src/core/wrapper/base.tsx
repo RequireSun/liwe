@@ -1,9 +1,9 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Store from './store';
-import curry from '../util/curry';
-import { id } from '../util/generator';
-import genGetter from './getter';
+import Store from '../store';
+import curry from '../../util/curry';
+import { id } from '../../util/generator';
+import genGetter from '../getter';
 
 const SYM_WATCHERS = Symbol('watchers');
 
@@ -16,8 +16,8 @@ export interface Props {
 // 注意: 我这里目前还是没有断路的纯变量替换, 改成编译器实现后应该就可以编译 & 动态监听了
 @inject('store')
 @observer
-export class HOC extends React.Component<Props, any> {
-  [SYM_WATCHERS]: (keyof HOC)[];
+export class Base extends React.Component<Props, any> {
+  [SYM_WATCHERS]: (keyof Base)[];
 
   // TODO 事件监听
   constructor(props: Props) {
@@ -32,7 +32,7 @@ export class HOC extends React.Component<Props, any> {
     store.checkIn(schema.id, original);
 
     Object.defineProperties(this, getter);
-    this[SYM_WATCHERS] = Object.keys(getter) as (keyof HOC)[];
+    this[SYM_WATCHERS] = Object.keys(getter) as (keyof Base)[];
   }
 
   render() {
@@ -47,7 +47,7 @@ export class HOC extends React.Component<Props, any> {
     } = this.props;
 
     // getter 属性
-    const watched = this[SYM_WATCHERS].reduce((obj: any, key: keyof HOC) => {
+    const watched = this[SYM_WATCHERS].reduce((obj: any, key: keyof Base) => {
       obj[key] = this[key];
       return obj;
     },{});
@@ -55,10 +55,10 @@ export class HOC extends React.Component<Props, any> {
     // 动态属性
     const val = entrepot.get(schema.id) || {};
 
-    return <TargetComponent onChange={curry(changeElementData, schema.id)} {...otherProps} {...val} {...watched} />;
+    return <TargetComponent onChange={curry(changeElementData, schema.id)} schema={schema} {...otherProps} {...val} {...watched} />;
   }
 }
 
 export default function hoc(TargetComponent: any) {
-  return (props: any) => <HOC {...props} TargetComponent={TargetComponent} />;
+  return (props: any) => <Base {...props} TargetComponent={TargetComponent} />;
 }

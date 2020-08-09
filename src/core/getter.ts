@@ -2,7 +2,7 @@
  * 解析 schema 中的计算表达式, 并创建 getter
  */
 import get from 'lodash/get';
-import { HOC } from './hoc';
+import { Base } from './wrapper/base';
 
 const EXCLUDES = new Set(['type']);
 
@@ -25,7 +25,7 @@ const genNames = (str: string): string[] => {
   return [...((new Set([...genReg(str)])) as Set<string>)];
 };
 
-export default function genGetter(component: HOC): { getter: PropertyDescriptorMap, original: { [key: string]: any; } } {
+export default function genGetter(component: Base): { getter: PropertyDescriptorMap, original: { [key: string]: any; } } {
   const getter: PropertyDescriptorMap = {};
   const original: { [key: string]: any; } = {};
 
