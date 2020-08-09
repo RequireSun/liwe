@@ -21,6 +21,9 @@ class App extends React.Component {
       }, {
         type: 'Text',
         value: '${input_1.value}',
+      }, {
+        type: 'Select',
+        options: '(${input_1.value} || "").split(",").filter(item => item).map(str => ({ label: str, value: str, }))',
       }],
       library: {
         Select,
