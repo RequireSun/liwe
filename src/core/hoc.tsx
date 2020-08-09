@@ -1,6 +1,6 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Store from '../store';
+import Store from './store';
 import curry from '../util/curry';
 import { id } from '../util/generator';
 import genGetter from './getter';

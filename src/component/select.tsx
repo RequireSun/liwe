@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './select.css';
+
 export interface Props {
   options?: {
     label: string;
@@ -16,7 +18,7 @@ export default class Select extends React.Component<Props, any> {
   render() {
     const { value = '', options = [], onChange } = this.props;
     return (
-      <select value={value} onChange={this.onChange}>
+      <select className="liwe-standard-select" value={value} onChange={this.onChange}>
         {options.map(item => <option value={item.value}>{item.label}</option>)}
       </select>
     );
