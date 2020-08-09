@@ -25,6 +25,10 @@ const genNames = (str: string): string[] => {
   return [...((new Set([...genReg(str)])) as Set<string>)];
 };
 
+/**
+ * @todo 如果不重构成编译版, 就改成用 computed 实现
+ * @param component
+ */
 export default function genGetter(component: Base): { getter: PropertyDescriptorMap, original: { [key: string]: any; } } {
   const getter: PropertyDescriptorMap = {};
   const original: { [key: string]: any; } = {};
