@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './label.css';
+
 export class Label extends React.Component<any, any> {
   render() {
     const {
@@ -10,8 +12,8 @@ export class Label extends React.Component<any, any> {
 
     if (schema.label) {
       return (
-        <div>
-          <label>{schema.label}</label>
+        <div className="liwe-standard-line">
+          <label className="liwe-standard-label">{schema.label}</label>
           <TargetElement schema={schema} {...otherProps} />
         </div>
       );

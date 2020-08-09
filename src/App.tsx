@@ -29,10 +29,6 @@ class App extends React.Component {
     },
   };
 
-  constructor(props: any) {
-    super(props);
-  }
-
   render() {
     const { schema, library } = this.state;
 
@@ -43,7 +39,6 @@ class App extends React.Component {
             <p>
               Edit <code>src/App.tsx</code> and save to reload.
             </p>
-            <Liwe schema={schema} library={library} />
             <a
               className="App-link"
               href="https://reactjs.org"
@@ -52,6 +47,7 @@ class App extends React.Component {
             >
               Learn React
             </a>
+            <Liwe schema={schema} library={library} />
           </header>
         </div>
     );

@@ -13,7 +13,7 @@ export default class Input extends React.Component<Props, any> {
   render() {
     const { value = '' } = this.props;
     return (
-      <input type="text" value={value} onChange={this.onChange}/>
+      <input className="liwe-standard-input" type="text" value={value} onChange={this.onChange}/>
     );
   }
 }

@@ -16,10 +16,10 @@ export default class Select extends React.Component<Props, any> {
     this.props.onChange('value', e.target.value);
   };
   render() {
-    const { value = '', options = [], onChange } = this.props;
+    const { value = '', options = [] } = this.props;
     return (
       <select className="liwe-standard-select" value={value} onChange={this.onChange}>
-        {options.map(item => <option value={item.value}>{item.label}</option>)}
+        {options.map(item => <option value={item.value} key={item.value}>{item.label}</option>)}
       </select>
     );
   }

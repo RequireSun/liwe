@@ -2,6 +2,12 @@ import React from 'react';
 import { observable } from 'mobx';
 import Base from './wrapper/base';
 import Label from './wrapper/label';
+import { id } from '../util/generator';
+
+export interface SchemaNode {
+  id: string;
+  type: string;
+}
 
 const wrapLibrary = (library: { [key: string]: any; }) => {
   const result: { [key: string]: any; } = {};
@@ -15,7 +21,7 @@ const wrapLibrary = (library: { [key: string]: any; }) => {
 // TODO 1. 动态修改 schema 怎么办
 // TODO 2. 组件内要是想使用这套能力怎么办
 export default class Store {
-  @observable schema: any[];
+  @observable schema: SchemaNode[];
   @observable entrepot: Map<string, any> = new Map();
   library: Map<string, any>;
 
@@ -42,14 +48,18 @@ export default class Store {
     this.entrepot.set(id, val);
   };
 
-  render = (inn: any) => {
+  render = (inn: SchemaNode) => {
+    if (!inn.id) {
+      inn.id = `comp_${id()}`;
+    }
+
     const TargetComponent = this.library.get(inn.type);
 
     if (!TargetComponent) {
       return null;
     }
 
-    return <TargetComponent schema={inn} />;
+    return <TargetComponent schema={inn} key={inn.id} />;
   };
 
   changeElementData = (id: string, key: string, value: any) => {

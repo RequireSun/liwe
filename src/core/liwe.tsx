@@ -1,6 +1,8 @@
 import React from 'react';
-import {observer, Provider} from 'mobx-react';
+import { observer, Provider } from 'mobx-react';
 import Store from './store';
+
+import './liwe.css';
 
 export interface Props {
   schema: any[];
@@ -20,7 +22,9 @@ export default class Liwe extends React.Component<Props, any> {
   render() {
     return (
       <Provider store={this.store}>
-        {this.store.schema.map(this.store.render)}
+        <div className="liwe-standard-container">
+          {this.store.schema.map(this.store.render)}
+        </div>
       </Provider>
     );
   }

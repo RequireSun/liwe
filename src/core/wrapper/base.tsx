@@ -1,14 +1,13 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import Store from '../store';
+import Store, { SchemaNode } from '../store';
 import curry from '../../util/curry';
-import { id } from '../../util/generator';
 import genGetter from '../getter';
 
 const SYM_WATCHERS = Symbol('watchers');
 
 export interface Props {
-  schema: any;
+  schema: SchemaNode;
   store: Store;
   TargetComponent: any;
 }
@@ -23,9 +22,6 @@ export class Base extends React.Component<Props, any> {
   constructor(props: Props) {
     super(props);
     const { store, schema } = props;
-    if (!schema.id) {
-      schema.id = `comp_${id()}`;
-    }
 
     const { original, getter } = genGetter(this);
 

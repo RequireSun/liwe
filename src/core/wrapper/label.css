@@ -1,0 +1,15 @@
+.liwe-standard-line {
+  display: table-row;
+  height: 30px;
+  line-height: 30px;
+}
+
+.liwe-standard-line > * {
+  display: table-cell;
+}
+
+.liwe-standard-line .liwe-standard-label {
+  padding: 0 5px 0 0;
+  font-size: 16px;
+  text-align: right;
+}
