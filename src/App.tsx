@@ -20,7 +20,7 @@ class App extends React.Component {
         type: 'Input',
       }, {
         type: 'Text',
-        content: '${input_1.value}',
+        value: '${input_1.value}',
       }],
       library: {
         Select,

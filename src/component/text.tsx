@@ -1,3 +1,14 @@
 import React from 'react';
 
-export default class Text extends React.Component<any, any> {}
+export interface Props {
+  value?: string;
+}
+
+export default class Text extends React.Component<Props, any> {
+  render() {
+    const { value = '' } = this.props;
+    return (
+      <span>{value}</span>
+    );
+  }
+}

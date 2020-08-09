@@ -21,8 +21,8 @@ export default class Store {
     this.schema = schema;
   }
 
-  checkIn = (component: any) => {
-    this.beeLine.set(component.id, component);
+  checkIn = (id: string, val: { [key: string]: any; }) => {
+    this.beeLine.set(id, val);
   };
 
   render = (inn: any) => {
